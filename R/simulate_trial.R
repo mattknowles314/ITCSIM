@@ -15,14 +15,14 @@
 #' @returns An object of class simtrial
 #'
 #' @export
-simulate_trial <- function(n = 50, covs = NULL, lambdas = 0.1, gammas = 1.5, pbeta = -0.5, sizebnom = 1L, pbinom = 0.5, maxt = 10, trts = c("A", "B")){
+simulate_trial <- function(n = 50, covs = NULL, lambdas = 0.1, gammas = 1.5, pBeta = -0.5, sizebnom = 1L, pbinom = 0.5, maxt = 10, trts = c("A", "B")){
   if (is.null(covs)){
     covs <- data.frame(id = 1:n, trt = stats::rbinom(n, sizebnom, pbinom))
   }
   simdata <- simsurv::simsurv(
     lambdas = lambdas,
     gammas = gammas,
-    betas = c(trt = -0.5),
+    betas = c(trt = -pBeta),
     x = covs,
     maxt = maxt
   ) |>

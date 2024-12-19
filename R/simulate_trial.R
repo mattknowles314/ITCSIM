@@ -15,16 +15,25 @@
 #' @returns An object of class simtrial
 #'
 #' @export
-simulate_trial <- function(n = 50, covs = NULL, lambdas = 0.1, gammas = 1.5, pBeta = -0.5, sizebnom = 1L, pbinom = 0.5, maxt = 10, trts = c("A", "B")){
-  if (is.null(covs)){
-    covs <- data.frame(id = 1:n, trt = stats::rbinom(n, sizebnom, pbinom))
+simulate_trial <- function(n = 50, distribution  = "weibull", covs = NULL, lambdas = 0.1, gammas = 1.5,
+                           pBeta = -0.5, sizebnom = 1L, pBinom = 0.5, maxt = 10,
+                           trts = c("A", "B"), pMale = 0.51, tdeVal = 0.15,
+                           tdef = "log", seed = 1, ageMean = 65, ageSD = 2.5){
+  if (is.null(covs)) {
+    covs <- data.frame(id = 1:n, trt = stats::rbinom(n, sizebnom, pBinom),
+                       sex = stats::rbinom(n, sizebnom, pMale),
+                       age = stats::rnorm(n, mean = ageMean, sd = ageSD))
   }
   simdata <- simsurv::simsurv(
     lambdas = lambdas,
+    dist = distribution,
     gammas = gammas,
-    betas = c(trt = -pBeta),
+    betas = c(trt = pBeta),
     x = covs,
-    maxt = maxt
+    tde = c(trt = tdeVal),
+    tdefunction = tdef,
+    maxt = maxt,
+    seed = seed
   ) |>
     dplyr::rename(time = eventtime)
 
@@ -33,7 +42,7 @@ simulate_trial <- function(n = 50, covs = NULL, lambdas = 0.1, gammas = 1.5, pBe
       trt == 1 ~ trts[1],
       trt == 0 ~ trts[2]
     ))
-  class(out) <- c("simtrial", clas(out))
+  class(out) <- c("tte", class(out))
   out
-
 }
+

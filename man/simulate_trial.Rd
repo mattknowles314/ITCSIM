@@ -9,11 +9,12 @@ simulate_trial(
   covs = NULL,
   lambdas = 0.1,
   gammas = 1.5,
-  pbeta = -0.5,
+  pBeta = -0.5,
   sizebnom = 1L,
-  pbinom = 0.5,
+  pBinom = 0.5,
   maxt = 10,
-  trts = c("A", "B")
+  trts = c("A", "B"),
+  pMale = 0.51
 )
 }
 \arguments{
@@ -25,15 +26,15 @@ simulate_trial(
 
 \item{gammas}{See [simsurv::simsurv].}
 
-\item{pbeta}{Log hazard ratio for treatment.}
-
-\item{pbinom}{Probability of being assigned to a treatment.}
-
 \item{maxt}{Maximim observation time.}
 
 \item{trts}{Vector of treatments.}
 
+\item{pbeta}{Log hazard ratio for treatment.}
+
 \item{sizebinom}{For the [stats::rbinom function].}
+
+\item{pbinom}{Probability of being assigned to a treatment.}
 }
 \value{
 An object of class simtrial

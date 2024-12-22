@@ -16,7 +16,7 @@
 #'
 #' @export
 simulate_trial <- function(n = 50, distribution  = "weibull", covs = NULL, lambdas = 0.1, gammas = 1.5,
-                           pBeta = -0.5, sizebnom = 1L, pBinom = 0.5, maxt = 10,
+                           pBeta = -0.5, sizebnom = 1L, pBinom = 0.5, maxt = NULL,
                            trts = c("A", "B"), pMale = 0.51, tdeVal = 0.15,
                            tdef = "log", seed = 1, ageMean = 65, ageSD = 2.5){
   if (is.null(covs)) {

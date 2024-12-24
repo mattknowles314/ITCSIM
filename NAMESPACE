@@ -3,3 +3,4 @@
 S3method(aggregate,tte)
 S3method(plot,tte)
 export(simulate_trial)
+export(table.tte)

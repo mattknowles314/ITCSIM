@@ -20,28 +20,32 @@ simulate_trial <- function(n = 50, distribution  = "weibull", covs = NULL, lambd
                            trts = c("A", "B"), pMale = 0.51, tdeVal = 0.15,
                            tdef = "log", seed = 1, ageMean = 65, ageSD = 2.5){
   if (is.null(covs)) {
-    covs <- data.frame(id = 1:n, trt = stats::rbinom(n, sizebnom, pBinom),
-                       sex = stats::rbinom(n, sizebnom, pMale),
-                       age = stats::rnorm(n, mean = ageMean, sd = ageSD))
+    covs <- data.frame(id = 1:n,
+                       TRT = stats::rbinom(n, sizebnom, pBinom),
+                       SEX = stats::rbinom(n, sizebnom, pMale),
+                       AGE = stats::rnorm(n, mean = ageMean, sd = ageSD))
   }
   simdata <- simsurv::simsurv(
     lambdas = lambdas,
     dist = distribution,
     gammas = gammas,
-    betas = c(trt = pBeta),
+    betas = c(TRT = pBeta),
     x = covs,
-    tde = c(trt = tdeVal),
+    tde = c(TRT = tdeVal),
     tdefunction = tdef,
     maxt = maxt,
     seed = seed
   ) |>
-    dplyr::rename(time = eventtime)
+    dplyr::rename(AVAL = eventtime) |>
+    dplyr::rename(CNSR = status)
 
   out <- merge(covs, simdata, by = "id") |>
-    dplyr::mutate(trt = dplyr::case_when(
-      trt == 1 ~ trts[1],
-      trt == 0 ~ trts[2]
-    ))
+    dplyr::mutate(TRT = dplyr::case_when(
+      TRT == 1 ~ trts[1],
+      TRT == 0 ~ trts[2]
+    )) |>
+    dplyr::mutate(across(SEX, as.factor)) |>
+    dplyr::rename(USUBJID = id)
   class(out) <- c("tte", class(out))
   out
 }

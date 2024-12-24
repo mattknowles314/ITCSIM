@@ -3,17 +3,17 @@
 #' @param trial An object of class 'tte'
 #'
 #' @export
-plot.tte <- function(trial, strat = "trt", xlab = "Time", ylab = "Survival",
+plot.tte <- function(trial, strat = "TRT", xlab = "Time", ylab = "Survival",
                           type = "survival", legend = "Treatment", CI = TRUE,
                           censor = TRUE, median = FALSE) {
-  f <- as.formula(paste0("survival::Surv(time, status) ~ ", strat))
+  f <- as.formula(paste0("survival::Surv(AVAL, CNSR) ~ ", strat))
 
   p <- ggsurvfit::survfit2(f, data = trial) |>
     ggsurvfit::ggsurvfit(linewidth = 1, type = type) +
     ggsurvfit::add_risktable(
-      risktable_stats = "{n.risk} ({cum.event})") +
+      risktable_stats = "{n.risk}") +
     ggsurvfit::scale_ggsurvfit() +
-    ggsurvfit::add_pvalue(caption = "Log-rank {p.value}") +
+    ggsurvfit::add_pvalue(caption = "L-R {p.value}") +
     ggsurvfit::add_legend_title(legend) +
     ggplot2::labs(xlab, ylab) +
     ggplot2::theme_bw()

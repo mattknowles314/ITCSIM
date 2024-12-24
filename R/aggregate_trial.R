@@ -5,11 +5,11 @@
 #' @export
 aggregate.tte <- function(trial) {
   out <- trial |>
-    dplyr::group_by(trt) |>
+    dplyr::group_by(TRT) |>
     dplyr::summarise(
       n = dplyr::n(),
-      median_age = median(age),
-      prop_male = mean(sex)
+      median_age = median(AGE),
+      prop_male = mean(SEX)
     )
   out
 }

@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{tte}(
   trial,
-  strat = "trt",
+  strat = "TRT",
   xlab = "Time",
   ylab = "Survival",
   type = "survival",

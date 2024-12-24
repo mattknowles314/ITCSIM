@@ -2,8 +2,8 @@
 #'
 #' @param trial An object of class 'tte'
 #'
-#'
-agd_trial <- function(trial) {
+#' @export
+aggregate.tte <- function(trial) {
   out <- trial |>
     dplyr::group_by(trt) |>
     dplyr::summarise(

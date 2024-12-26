@@ -44,7 +44,6 @@ simulate_trial <- function(n = 50, distribution  = "weibull", covs = NULL, lambd
       TRT == 1 ~ trts[1],
       TRT == 0 ~ trts[2]
     )) |>
-    dplyr::mutate(across(SEX, as.factor)) |>
     dplyr::rename(USUBJID = id)
   class(out) <- c("tte", class(out))
   out

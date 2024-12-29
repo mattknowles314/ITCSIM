@@ -10,7 +10,8 @@ simulate_trial(
   covs = NULL,
   lambdas = 0.1,
   gammas = 1.5,
-  pBeta = -0.5,
+  pBetaTrt = -0.5,
+  pBetaSex = -0.3,
   sizebnom = 1L,
   pBinom = 0.5,
   maxt = NULL,
@@ -31,11 +32,13 @@ simulate_trial(
 
 \item{gammas}{See [simsurv::simsurv].}
 
+\item{pBetaTrt}{Log hazard ratio for treatment.}
+
+\item{pBetaSex}{Log hazard ratio for sex}
+
 \item{maxt}{Maximim observation time.}
 
 \item{trts}{Vector of treatments.}
-
-\item{pbeta}{Log hazard ratio for treatment.}
 
 \item{sizebinom}{For the [stats::rbinom function].}
 

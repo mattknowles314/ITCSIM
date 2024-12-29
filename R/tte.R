@@ -23,7 +23,7 @@ plot.tte <- function(trial, strat = "TRT", xlab = "Time", ylab = "Survival",
   }
 
   if (censor) {
-    p <- p + ggsurvfit::add_censor_mark(size = 2, alpha = 0.2)
+    p <- p + ggsurvfit::add_censor_mark(size = 4)
   }
 
   if (median) {

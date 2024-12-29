@@ -18,7 +18,6 @@ simulate_trial(
   pMale = 0.51,
   tdeVal = 0.15,
   tdef = "log",
-  seed = 1,
   ageMean = 65,
   ageSD = 2.5
 )

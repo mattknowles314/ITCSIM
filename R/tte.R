@@ -32,3 +32,21 @@ plot.tte <- function(trial, strat = "TRT", xlab = "Time", ylab = "Survival",
 
   p
 }
+
+#' Median of a trial in a TTE object
+#'
+#' @param tial An object of class 'tte'
+#' @param strat The strata to calculate medians for. Defaults to treatment
+#'
+#' @export
+median.tte <- function(trial, strat = "TRT") {
+  survObj <- survival::survfit(
+    as.formula(paste0("survival::Surv(AVAL, CNSR) ~ ", strat)),
+    data = trial)
+
+  meds <- survival:::median.survfit(survObj)
+  out <- data.frame(x = levels(as.factor(trial[[strat]])),
+                    y = c(meds[1], meds[2]))
+  colnames(out) <- c(strat, "Median")
+  out
+}

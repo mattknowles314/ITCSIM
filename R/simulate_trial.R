@@ -18,7 +18,7 @@
 simulate_trial <- function(n = 50, distribution  = "weibull", covs = NULL, lambdas = 0.1, gammas = 1.5,
                            pBeta = -0.5, sizebnom = 1L, pBinom = 0.5, maxt = NULL,
                            trts = c("A", "B"), pMale = 0.51, tdeVal = 0.15,
-                           tdef = "log", seed = 1, ageMean = 65, ageSD = 2.5){
+                           tdef = "log", ageMean = 65, ageSD = 2.5){
   if (is.null(covs)) {
     covs <- data.frame(id = 1:n,
                        TRT = stats::rbinom(n, sizebnom, pBinom),
@@ -33,8 +33,7 @@ simulate_trial <- function(n = 50, distribution  = "weibull", covs = NULL, lambd
     x = covs,
     tde = c(TRT = tdeVal),
     tdefunction = tdef,
-    maxt = maxt,
-    seed = seed
+    maxt = maxt
   ) |>
     dplyr::rename(AVAL = eventtime) |>
     dplyr::rename(CNSR = status)
